@@ -1,9 +1,7 @@
-# 📱 MoPhones Credit Intelligence Dashboard
+# MoPhones Credit Intelligence Dashboard
 
 A production-grade Streamlit dashboard analysing MoPhones' 2025 credit portfolio.
 Built as part of the **Data Analyst – Product & Credit** case study.
-
-🚀 **[Live App → mophones-credit.streamlit.app](#)**
 
 ---
 
@@ -31,61 +29,23 @@ Five interactive pages address every core business question:
 - **18–25 cohort** has the highest PAR 30 (21.3%) and FPD (7.0%)
 
 ---
-
-## Local Setup
-
-```bash
-# 1. Clone
-git clone https://github.com/YOUR_USERNAME/mophones-credit-dashboard.git
-cd mophones-credit-dashboard
-
-# 2. Place your data files in the project root:
-#    Credit Data.zip   (or extracted Credit Data/ folder)
-#    Sales and Customer Data.zip  (or Sales and Customer Data.xlsx)
-#    NPS Data.xlsx
-
-# 3. Install dependencies
-pip install -r requirements.txt
-
-# 4. Run
-streamlit run app.py
-```
-
-Open http://localhost:8501
-
----
-
 ## Project Structure
 
 ```
 mophones-credit-dashboard/
-├── app.py                  ← Main Streamlit app (all pages)
+├── app.py                  ← Main
 ├── requirements.txt        ← Python dependencies
 ├── .streamlit/
 │   └── config.toml        ← Theme configuration
-├── Credit Data/            ← Credit snapshot CSVs (not committed — add your own)
+├── Credit Data/            ← Credit snapshot CSVs 
 │   ├── Credit Data - 01-01-2025.csv
 │   ├── Credit Data - 30-03-2025.csv
 │   ├── Credit Data - 30-06-2025.csv
 │   ├── Credit Data - 30-09-2025.csv
 │   └── Credit Data - 30-12-2025.csv
-├── Sales and Customer Data.xlsx   ← Demographics (not committed)
-└── NPS Data.xlsx                  ← NPS survey (not committed)
+├── Sales and Customer Data.xlsx   ← Demographics 
+└── NPS Data.xlsx                  ← NPS survey 
 ```
-
----
-
-## Deploying to Streamlit Community Cloud
-
-1. Push this repo to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your GitHub repo
-4. Set **Main file path** to `app.py`
-5. Add your data files as **Secrets** or upload via the file uploader
-
-> **Note:** The data files are excluded from git (`.gitignore`). For Streamlit Cloud deployment, upload them via the app's file uploader or store them in a cloud bucket.
-
----
 
 ## Tech Stack
 
@@ -105,4 +65,4 @@ mophones-credit-dashboard/
 
 ---
 
-*MoPhones · Data Analyst Case Study · 2025*
+*MoPhones  · 2025*
