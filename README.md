@@ -23,9 +23,9 @@ Five interactive pages address every core business question:
 ## Key Findings
 
 - **PAR 30 grew from 22.9% → 32.8%** (+10pp) over 2025
-- **Avg Days Past Due rose 66%** to 283 days — chronic delinquency is ageing, not resolving
+- **Avg Days Past Due rose 66%** to 283 days - chronic delinquency is ageing, not resolving
 - **13.6% of customers** report phone locked despite on-time payment
-- **Return account NPS = −46.8** — the single largest customer experience failure
+- **Return account NPS = -46.8** - the single largest customer experience failure
 - **18–25 cohort** has the highest PAR 30 (21.3%) and FPD (7.0%)
 
 ---
