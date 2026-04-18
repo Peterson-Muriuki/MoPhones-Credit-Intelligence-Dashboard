@@ -16,6 +16,50 @@ from plotly.subplots import make_subplots
 import os, warnings, zipfile, io, requests
 warnings.filterwarnings("ignore")
 
+# ── Matplotlib-free cell colouring (works on Streamlit Cloud) ─────────────────
+def _risk_color(val, lo, hi):
+    """Return an inline CSS background-color string: red=high risk, green=low."""
+    try:
+        v = float(val)
+    except (TypeError, ValueError):
+        return ""
+    if hi == lo:
+        return ""
+    ratio = max(0.0, min(1.0, (v - lo) / (hi - lo)))
+    r = int(220 * ratio + 30 * (1 - ratio))
+    g = int(30 * ratio + 180 * (1 - ratio))
+    b = 50
+    return f"background-color: rgba({r},{g},{b},0.18); color: var(--color-text-primary)"
+
+def style_risk_table(df, risk_rows):
+    """Colour only the specified rows red→green without matplotlib."""
+    def _cell(val, row_name):
+        if row_name not in risk_rows:
+            return ""
+        col_vals = [df.loc[row_name, c] for c in df.columns if row_name in df.index]
+        lo, hi = min(col_vals), max(col_vals)
+        return _risk_color(val, lo, hi)
+
+    styles = pd.DataFrame("", index=df.index, columns=df.columns)
+    for row in risk_rows:
+        if row in df.index:
+            row_vals = df.loc[row].values.astype(float)
+            lo, hi = row_vals.min(), row_vals.max()
+            for col in df.columns:
+                styles.loc[row, col] = _risk_color(df.loc[row, col], lo, hi)
+    return df.style.apply(lambda _: styles, axis=None).format("{:,}")
+
+def style_pct_table(df, cols):
+    """Colour specified % columns red→green without matplotlib."""
+    def colour_col(series):
+        lo, hi = series.min(), series.max()
+        return [_risk_color(v, lo, hi) for v in series]
+    return (df.style
+            .apply(colour_col, subset=cols)
+            .format("{:.1f}", subset=cols))
+
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG  (must be first Streamlit call)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -621,10 +665,9 @@ elif page == "Portfolio Health":
         s:{p:(snaps[p]["ACCOUNT_STATUS_L2"]==s).sum() for p in PERIODS}
         for s in ["Active","PAR 7","PAR 30","FPD","FMD","Inactive","Return","Paid Off"]
     }).T
-    st.dataframe(tbl.style
-        .background_gradient(axis=1,cmap="RdYlGn_r",
-            subset=pd.IndexSlice[["PAR 30","FPD","FMD","Return"],:])
-        .format("{:,}"), use_container_width=True)
+    st.dataframe(
+        style_risk_table(tbl, ["PAR 30","FPD","FMD","Return"]),
+        use_container_width=True)
 
     cl,cr = st.columns(2)
     with cl:
@@ -854,9 +897,11 @@ elif page == "Customer Experience":
         st.plotly_chart(fig, use_container_width=True)
     with cr:
         st.markdown("<div style='height:24px'></div>",unsafe_allow_html=True)
-        st.dataframe(fr.drop("n",axis=1).style.background_gradient(
-            subset=["Locked on-time (%)","Payment delay (%)","Support difficulty (%)"],
-            cmap="RdYlGn_r"),use_container_width=True,hide_index=True)
+        st.dataframe(
+            style_pct_table(
+                fr.drop("n",axis=1),
+                ["Locked on-time (%)","Payment delay (%)","Support difficulty (%)"]),
+            use_container_width=True, hide_index=True)
 
     div()
     sh("🤖","AI INSIGHT — Q2","Mistral")
