@@ -150,7 +150,7 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 .sh-icon { font-size:16px; }
 .sh-title { font-size:10.5px; font-weight:800; color:#64748B;
   text-transform:uppercase; letter-spacing:.1em; }
-.sh-badge { font-size:9px; font-weight:700; color:#1E293B;
+.sh-badge { font-size:9px; font-weight:700; color:#64748B;
   background:#0F172A; padding:3px 8px; border-radius:4px; }
 
 /* ══ Alerts ══ */
@@ -170,15 +170,70 @@ html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
 
 /* ══ Sidebar ══ */
 section[data-testid="stSidebar"] {
-  background:#060C18 !important;
-  border-right:1px solid rgba(255,255,255,.04); }
+  background:#0F1E35 !important;
+  border-right:1px solid rgba(255,255,255,.08); }
+
+/* ── Sidebar content text ── */
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] label {
+  color:#CBD5E1 !important; }
+
+/* ── Radio buttons: always visible circles ── */
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label {
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  margin-bottom: 3px !important;
+  cursor: pointer;
+  transition: background .15s, border-color .15s; }
+
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:hover {
+  background: rgba(255,255,255,.09) !important;
+  border-color: rgba(245,158,11,.5) !important; }
+
+/* Selected radio item */
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) {
+  background: rgba(245,158,11,.12) !important;
+  border-color: #F59E0B !important; }
+
+/* Radio circle indicator — make it bright and always visible */
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label span:first-child {
+  border: 2px solid rgba(255,255,255,.4) !important;
+  background: transparent !important; }
+
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) span:first-child {
+  border-color: #F59E0B !important;
+  background: #F59E0B !important; }
+
+/* Radio label text */
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label p {
+  color: #CBD5E1 !important;
+  font-size: 13px !important;
+  font-weight: 400 !important; }
+
+section[data-testid="stSidebar"] .stRadio div[role="radiogroup"] label:has(input:checked) p {
+  color: #F59E0B !important;
+  font-weight: 500 !important; }
+
+/* ── Selectbox ── */
+section[data-testid="stSidebar"] .stSelectbox > div > div {
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.15) !important;
+  color: #CBD5E1 !important; }
+
+/* ── Sidebar divider ── */
+section[data-testid="stSidebar"] hr {
+  border-color: rgba(255,255,255,.1) !important; }
+
 .sb-brand { padding:18px 14px 10px;
-  border-bottom:1px solid rgba(255,255,255,.05); margin-bottom:14px; }
+  border-bottom:1px solid rgba(255,255,255,.1); margin-bottom:14px; }
 .sb-brand h1 { font-size:20px; font-weight:900; color:#F59E0B;
   margin:0; letter-spacing:-1px; }
-.sb-brand p  { font-size:10px; color:#1E293B; margin:2px 0 0; }
+.sb-brand p  { font-size:10px; color:#64748B; margin:2px 0 0; }
 
-.divider { height:1px; background:rgba(255,255,255,.05); margin:22px 0; }
+.divider { height:1px; background:rgba(255,255,255,.08); margin:22px 0; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -514,13 +569,13 @@ with st.sidebar:
     fc  = "#10B981"              if ok else "#EF4444"
     msg = "Mistral ready"        if ok else "run: ollama serve"
     st.markdown(f"""
-    <div style="margin-top:14px;padding:9px 12px;background:#060C18;
+    <div style="margin-top:14px;padding:9px 12px;background:rgba(255,255,255,.05);
                 border-radius:8px;border:1px solid {bc}">
       <div style="font-size:9px;font-weight:700;color:{fc};
                   letter-spacing:.1em;text-transform:uppercase">
         {'🟢 AI Online' if ok else '🔴 AI Offline'}
       </div>
-      <div style="font-size:9px;color:#1E293B;margin-top:2px">{msg}</div>
+      <div style="font-size:9px;color:#94A3B8;margin-top:2px">{msg}</div>
     </div>""", unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -529,7 +584,7 @@ with st.sidebar:
 if page == "Overview":
     st.markdown("""<h1 style="font-size:26px;font-weight:900;color:#E2E8F0;
       margin:16px 0 2px;letter-spacing:-1px">Credit Portfolio Intelligence</h1>
-      <p style="color:#1E293B;font-size:12px;margin-bottom:14px">
+      <p style="color:#64748B;font-size:12px;margin-bottom:14px">
       Full-year 2025 · 5 quarterly snapshots · 20,742 accounts as at Dec-25</p>""",
       unsafe_allow_html=True)
 
@@ -986,7 +1041,7 @@ elif page == "Data Quality":
 elif page == "Case Study Answers":
     st.markdown("""<h1 style="font-size:26px;font-weight:900;color:#E2E8F0;margin:16px 0 2px;letter-spacing:-1px">
       Case Study — Full Written Answers</h1>
-      <p style="color:#1E293B;font-size:12px;margin-bottom:16px">
+      <p style="color:#64748B;font-size:12px;margin-bottom:16px">
       Evidence-based responses to all three questions — every claim traceable to the data.</p>""",
       unsafe_allow_html=True)
 
@@ -1095,7 +1150,7 @@ elif page == "Case Study Answers":
 elif page == "AI Analyst":
     st.markdown("""<h1 style="font-size:26px;font-weight:900;color:#E2E8F0;margin:16px 0 2px;letter-spacing:-1px">
       🤖 AI Analyst — Powered by Mistral</h1>
-      <p style="color:#1E293B;font-size:12px;margin-bottom:10px">
+      <p style="color:#64748B;font-size:12px;margin-bottom:10px">
       Local inference via Ollama · no API key · your data never leaves the machine</p>""",
       unsafe_allow_html=True)
 
