@@ -49,9 +49,9 @@ mophones-credit-dashboard/
 
 ## Tech Stack
 
-- **Streamlit** — dashboard framework
-- **Plotly** — interactive charts
-- **Pandas / NumPy** — data processing
+- **Streamlit** - dashboard framework
+- **Plotly** - interactive charts
+- **Pandas / NumPy** - data processing
 
 ---
 
